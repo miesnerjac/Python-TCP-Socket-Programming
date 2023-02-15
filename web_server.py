@@ -41,7 +41,7 @@ def handler(conn_socket: socket.socket, address: tuple[str, int]) -> None:
             f = open(path, "rb")
 
             # Send the HTTP response header line to the connection socket
-            conn_socket.send(b"HTTP/1.1 200 OK/r/n")
+            conn_socket.send(b"HTTP/1.1 200 OK\r\n")
 
             # Send the content of the requested file to the connection socket
             conn_socket.send(f.read())
@@ -49,10 +49,10 @@ def handler(conn_socket: socket.socket, address: tuple[str, int]) -> None:
 
     except IOError:
         # Send HTTP response message for file not found (404)
-        conn_socket.send(b"HTTP/1.1 404 Not Found/r/n")
+        conn_socket.send(b"HTTP/1.1 404 Not Found\r\n")
 
         # Open file, store the content of the requested file in a temporary buffer (variable).
-        file1 = open("not_found.html", "rb")
+        file1 = open("web_files/not_found.html", "rb")
 
         # Send the content of the requested file to the connection socket
         conn_socket.send(file1.read())
